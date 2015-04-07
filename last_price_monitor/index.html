@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Last Price Monitor</title>
+	<link rel="stylesheet" type="text/css" href="css/eikonwebui.css">
+	<script type="text/javascript" src="libs/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="libs/knockout-3.1.0.min.js"></script>
+	<script type="text/javascript" src="libs/jet-1.1.2/JET.js"></script>
+	<script type="text/javascript" src="libs/jet-1.1.2/plugins/Quotes.js"></script>
+	<script type="text/javascript" src="libs/jet-1.1.2/plugins/News.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
+	<style type="text/css">
+		body {
+			margin: 10px 10px 10px 10px;
+			height: 100%;
+		}
+		.padder {
+			padding: 10px 10px 10px 10px;
+		}
+		.sectionName {
+			font-size: 35px;
+		}
+		.mainLastPrice {
+			font-size: 200px;
+			font-weight: bold;
+			text-align: center;
+		}
+		.percentChange {
+			font-size: 100px;
+			font-weight: bold;
+			text-align: center;
+		}
+		.newsLink {
+			color: #28d2ff !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="flex-row" style="height: 100%;">
+	   <div class="flex-item flex-split1 flex-col">
+	      <div class="flex-item flex-split1 content padder" style="height: 300px;">
+	      	<h2 class="text-style-header3 sectionName" data-bind="text: companyName"></h2>
+	      	<div class="mainLastPrice">
+	      		<span data-bind="text: lastPrice, css: percentChangeColor"></span>
+	      	</div>
+	      </div>
+	      <div class="flex-item flex-split1 flex-row"  style="height: 230px;">
+	         <div class="flex-item flex-split1 content padder">
+		      	<h2 class="text-style-header3 sectionName">% Change</h2>
+		      	<div class="percentChange">
+		      		<span  data-bind="text: formatedPercentChange, css: percentChangeColor"></span>
+		      	</div>	      	
+	         </div>
+	         <div class="flex-item flex-split1 content">
+	         	<div style="height: 220px; overflow-x: hidden; overflow-y: auto;">
+					<div class="l-table s-table2 links-alt-color" style="width:100%;font-size:12px;">
+						<div class="l-table-row s-header-row">
+							<div class="l-table-cell"><b>Latest News for <span data-bind="text: companyName"></span></b></div>
+						</div>
+						<!-- ko foreach: news -->
+							<div class="l-table-row">
+								<div class="l-table-cell">
+									<span style="font-weight: bold" data-bind="text: t"></span> - 
+									<a href="javascript:void(0)" class="newsLink" data-bind="html: h, click: $parent.openNews"></a>
+								</div>
+							</div>
+						<!-- /ko -->
+					</div>
+				</div>
+	         </div>
+	      </div>	
+	   </div>
+	</div>
+</body>
+</html>

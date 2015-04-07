@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Eikon Application</title>
+    <link rel="stylesheet" type="text/css" href="./include/EikonWebUI/webui/css/EikonWebUI.css">
+  <style type="text/css">
+    body {
+      margin: 10px 10px 10px 10px;
+    }
+  </style>
+  <script src="./include/jet-1.8.0/JET.js"></script>
+  <script src="./include/jet-1.8.0/plugins/Quotes.js"></script> 
+  <script type="text/javascript">
+    function onloadHandler() {    	
+    	//Handling JET OnLoad event which will be fired
+    	//after JET.init() is done
+
+
+JET.onLoad(initApp);
+
+JET.init({
+  ID: "JETSample"
+});
+
+function initApp() {
+  // The 1st way to create a subscription
+  var subscription = JET.Quotes.create();
+  subscription.rics("JPY=");
+  subscription.formattedFields("CF_LAST");
+  subscription.onUpdate(onUpdate);
+  subscription.start();
+
+  // The 2nd way to create a subscription
+  // For convenience, the method chaining is allowed for creating a subscription
+  JET.Quotes.create()
+    .rics("EUR=")
+    .formattedFields("CF_LAST")
+    .onUpdate(onUpdate)
+    .start();
+}
+
+function onUpdate(subscription, ric, updatedValues) {
+  if (updatedValues["CF_LAST"]) {
+    var id = ric.replace("=", "");
+
+    $("#" + id).val(updatedValues["CF_LAST"].formatted);
+  }
+}
+
+}
+
+  </script>
+</head>
+<body onload="onloadHandler()">
+  <input type="text" placeholder="Enter Search Term"><button>Search</button>
+  JPY= <input type="text" id="JPY" class="nova-textbox">
+</body>
+</html>
